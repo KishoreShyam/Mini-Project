@@ -1,0 +1,15 @@
+{
+  "user_id": "main_user",
+  "created_date": "2025-09-18T20:24:45.091526",
+  "last_training": null,
+  "training_sessions": 0,
+  "total_keystrokes": 0,
+  "model_accuracy": 0.0,
+  "is_trained": false,
+  "typing_statistics": {
+    "avg_typing_speed": 0.0,
+    "avg_dwell_time": 0.0,
+    "avg_flight_time": 0.0,
+    "common_patterns": []
+  }
+}

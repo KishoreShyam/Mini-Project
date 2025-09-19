@@ -1,0 +1,27 @@
+{
+  "twilio": {
+    "account_sid": "",
+    "auth_token": "",
+    "phone_number": ""
+  },
+  "email": {
+    "smtp_server": "smtp.gmail.com",
+    "smtp_port": 587,
+    "email": "",
+    "password": ""
+  },
+  "fast2sms": {
+    "api_key": ""
+  },
+  "pushbullet": {
+    "api_key": ""
+  },
+  "mobile_number": "+918015339335",
+  "alert_preferences": {
+    "emergency_calls": true,
+    "sms_alerts": true,
+    "email_alerts": true,
+    "push_notifications": true,
+    "system_alarm": true
+  }
+}

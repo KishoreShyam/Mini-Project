@@ -1,0 +1,12 @@
+[
+  {
+    "timestamp": "2025-09-18T11:46:55.096361",
+    "message": "Unauthorized access attempt detected at 2025-09-18 11:46:51\nIntruder photo captured: intruder_20250918_114650.jpg",
+    "photo_path": "intruder_20250918_114650.jpg",
+    "failed_attempts": 3,
+    "emergency_call_sent": false,
+    "instant_alerts_sent": true,
+    "email_notification_sent": false,
+    "total_success": true
+  }
+]

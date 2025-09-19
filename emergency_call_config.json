@@ -1,0 +1,23 @@
+{
+  "user_phone": "+918015339335",
+  "twilio": {
+    "account_sid": "",
+    "auth_token": "",
+    "from_number": "",
+    "enabled": false
+  },
+  "alternative_services": {
+    "textlocal": {
+      "api_key": "",
+      "enabled": false
+    },
+    "fast2sms": {
+      "api_key": "",
+      "enabled": false
+    }
+  },
+  "emergency_message": {
+    "voice_message": "Security Alert! Security Alert! Unauthorized access detected on your computer at {time}. Someone is trying to break into your system. Please check your computer immediately. This is an automated security alert from your keystroke authentication system.",
+    "sms_message": "\ud83d\udea8 SECURITY BREACH! Unauthorized access detected on your computer at {time}. Check your system NOW! - Your Security System"
+  }
+}

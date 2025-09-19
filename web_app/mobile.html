@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>🔒 Security Control</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#1a1a2e">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px 0;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .status-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .emergency-section {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .emergency-btn {
+            width: 100%;
+            height: 70px;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .emergency-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .shutdown-btn {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
+        }
+        
+        .shutdown-btn:hover {
+            box-shadow: 0 12px 35px rgba(231, 76, 60, 0.6);
+        }
+        
+        .lock-btn {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            box-shadow: 0 8px 25px rgba(243, 156, 18, 0.4);
+            height: 55px;
+            font-size: 16px;
+        }
+        
+        .control-btn {
+            width: 48%;
+            height: 50px;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .control-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .status-btn {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+        
+        .test-btn {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+        }
+        
+        .controls-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .log-section {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 15px;
+            height: 200px;
+            overflow-y: auto;
+        }
+        
+        .log-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .log-entry {
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+            color: #ecf0f1;
+            margin-bottom: 5px;
+            padding: 5px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+        }
+        
+        .confirmation-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #e74c3c;
+        }
+        
+        .modal-text {
+            font-size: 14px;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .modal-btn {
+            flex: 1;
+            height: 45px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .confirm-btn {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+        }
+        
+        .cancel-btn {
+            background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+            color: white;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 14px;
+            z-index: 2000;
+            display: none;
+        }
+        
+        .notification.success {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+        }
+        
+        .notification.error {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+            
+            .emergency-btn {
+                height: 60px;
+                font-size: 16px;
+            }
+            
+            .control-btn {
+                height: 45px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔒 Security Control</h1>
+        <p>Remote Laptop Control</p>
+    </div>
+    
+    <div class="status-card">
+        <div class="status-indicator" id="statusIndicator">
+            🔍 Checking connection...
+        </div>
+    </div>
+    
+    <div class="emergency-section">
+        <div class="section-title">🚨 Emergency Controls</div>
+        
+        <button class="emergency-btn shutdown-btn" onclick="confirmShutdown()">
+            🔴 EMERGENCY SHUTDOWN
+        </button>
+        
+        <button class="emergency-btn lock-btn" onclick="lockSystem()">
+            🔒 LOCK SYSTEM
+        </button>
+    </div>
+    
+    <div class="section-title">📱 Quick Controls</div>
+    <div class="controls-row">
+        <button class="control-btn status-btn" onclick="getStatus()">
+            📊 STATUS
+        </button>
+        <button class="control-btn test-btn" onclick="sendTestAlert()">
+            🧪 TEST ALERT
+        </button>
+    </div>
+    
+    <div class="log-section">
+        <div class="log-title">📋 Activity Log</div>
+        <div id="activityLog"></div>
+    </div>
+    
+    <!-- Confirmation Modal -->
+    <div class="confirmation-modal" id="confirmationModal">
+        <div class="modal-content">
+            <div class="modal-title">🚨 EMERGENCY SHUTDOWN</div>
+            <div class="modal-text">
+                Are you sure you want to SHUTDOWN the laptop?<br><br>
+                This will immediately shut down the system!<br><br>
+                Tap CONFIRM to proceed.
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel-btn" onclick="hideConfirmation()">Cancel</button>
+                <button class="modal-btn confirm-btn" onclick="executeShutdown()">CONFIRM</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+    
+    <script>
+        // Configuration - Update this with your laptop's IP
+        const LAPTOP_IP = window.location.hostname; // Uses same IP as web server
+        const API_URL = `http://${LAPTOP_IP}:8080/api`;
+        
+        let activityLog = [];
+        
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            logActivity('📱 Mobile Security App Started');
+            startStatusMonitoring();
+            
+            // Add to home screen prompt
+            if ('serviceWorker' in navigator) {
+                logActivity('📱 PWA features available');
+            }
+        });
+        
+        function startStatusMonitoring() {
+            checkLaptopStatus();
+            setInterval(checkLaptopStatus, 10000); // Check every 10 seconds
+        }
+        
+        async function checkLaptopStatus() {
+            try {
+                const response = await fetch(`${API_URL}/keystroke/stats`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' },
+                    signal: AbortSignal.timeout(5000)
+                });
+                
+                if (response.ok) {
+                    updateStatus('✅ Laptop Connected', '#2ecc71');
+                } else {
+                    updateStatus('⚠️ Connection Issues', '#f39c12');
+                }
+            } catch (error) {
+                updateStatus('❌ Laptop Offline', '#e74c3c');
+            }
+        }
+        
+        function updateStatus(text, color) {
+            const indicator = document.getElementById('statusIndicator');
+            indicator.textContent = text;
+            indicator.style.color = color;
+        }
+        
+        function logActivity(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            const entry = `[${timestamp}] ${message}`;
+            
+            activityLog.unshift(entry);
+            if (activityLog.length > 15) {
+                activityLog.pop();
+            }
+            
+            updateLogDisplay();
+        }
+        
+        function updateLogDisplay() {
+            const logContainer = document.getElementById('activityLog');
+            logContainer.innerHTML = activityLog
+                .map(entry => `<div class="log-entry">${entry}</div>`)
+                .join('');
+        }
+        
+        async function sendRemoteCommand(command, data = {}) {
+            try {
+                const commandData = {
+                    command: command,
+                    source: 'mobile_web_app',
+                    command_id: `cmd_${Date.now()}`,
+                    timestamp: new Date().toISOString(),
+                    data: data
+                };
+                
+                const response = await fetch(`${API_URL}/remote/command`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(commandData),
+                    signal: AbortSignal.timeout(10000)
+                });
+                
+                if (response.ok) {
+                    logActivity(`✅ Command '${command}' sent successfully`);
+                    return true;
+                } else {
+                    logActivity(`❌ Command '${command}' failed: ${response.status}`);
+                    return false;
+                }
+            } catch (error) {
+                logActivity(`❌ Command error: ${error.message}`);
+                return false;
+            }
+        }
+        
+        function confirmShutdown() {
+            document.getElementById('confirmationModal').style.display = 'flex';
+        }
+        
+        function hideConfirmation() {
+            document.getElementById('confirmationModal').style.display = 'none';
+        }
+        
+        async function executeShutdown() {
+            hideConfirmation();
+            logActivity('🚨 EMERGENCY SHUTDOWN INITIATED');
+            
+            const success = await sendRemoteCommand('shutdown', {
+                force: true,
+                delay: 10,
+                reason: 'Emergency shutdown from mobile web app'
+            });
+            
+            if (success) {
+                showNotification('✅ Emergency shutdown sent! Laptop will shut down in 10 seconds.', 'success');
+            } else {
+                showNotification('❌ Failed to send shutdown command.', 'error');
+            }
+        }
+        
+        async function lockSystem() {
+            logActivity('🔒 LOCK COMMAND SENT');
+            
+            const success = await sendRemoteCommand('lock', {
+                reason: 'Remote lock from mobile web app'
+            });
+            
+            if (success) {
+                showNotification('✅ System lock sent!', 'success');
+            } else {
+                showNotification('❌ Failed to send lock command.', 'error');
+            }
+        }
+        
+        async function getStatus() {
+            logActivity('📊 Requesting device status...');
+            await sendRemoteCommand('status', {});
+        }
+        
+        async function sendTestAlert() {
+            logActivity('🧪 Sending test alert...');
+            
+            const success = await sendRemoteCommand('alert', {
+                alert_message: 'This is a test alert from the mobile web app',
+                priority: 'normal'
+            });
+            
+            if (success) {
+                showNotification('✅ Test alert sent!', 'success');
+            } else {
+                showNotification('❌ Failed to send test alert.', 'error');
+            }
+        }
+        
+        function showNotification(message, type = 'info') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 4000);
+        }
+        
+        // Add haptic feedback for mobile devices
+        function vibrate() {
+            if ('vibrate' in navigator) {
+                navigator.vibrate(50);
+            }
+        }
+        
+        // Add vibration to buttons
+        document.addEventListener('click', function(e) {
+            if (e.target.tagName === 'BUTTON') {
+                vibrate();
+            }
+        });
+        
+        // Handle online/offline status
+        window.addEventListener('online', () => {
+            logActivity('📶 Connection restored');
+            checkLaptopStatus();
+        });
+        
+        window.addEventListener('offline', () => {
+            logActivity('📵 Connection lost');
+            updateStatus('📵 No Internet', '#e74c3c');
+        });
+    </script>
+</body>
+</html>

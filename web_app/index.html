@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔒 Keystroke Security System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="floating-particles"></div>
+        <div class="gradient-overlay"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header with Animated Logo -->
+        <header class="header">
+            <div class="logo-container">
+                <div class="shield-icon">
+                    <i class="fas fa-shield-alt"></i>
+                    <div class="pulse-ring"></div>
+                    <div class="pulse-ring delay-1"></div>
+                    <div class="pulse-ring delay-2"></div>
+                </div>
+                <div class="title-section">
+                    <h1 class="main-title">KEYSTROKE SECURITY</h1>
+                    <p class="subtitle">Advanced Biometric Authentication System</p>
+                </div>
+            </div>
+            <div class="status-indicator">
+                <div class="status-dot"></div>
+                <span>System Ready</span>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs">
+            <button class="tab-btn active" data-tab="training">
+                <i class="fas fa-brain"></i>
+                <span>AI Training</span>
+                <div class="tab-indicator"></div>
+            </button>
+            <button class="tab-btn" data-tab="security">
+                <i class="fas fa-lock"></i>
+                <span>Security System</span>
+                <div class="tab-indicator"></div>
+            </button>
+            <button class="tab-btn" data-tab="settings">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+                <div class="tab-indicator"></div>
+            </button>
+        </nav>
+
+        <!-- Tab Content -->
+        <main class="tab-content">
+            <!-- Training Tab -->
+            <div class="tab-panel active" id="training">
+                <div class="panel-header">
+                    <div class="header-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="header-text">
+                        <h2>Neural Network Training</h2>
+                        <p>Train the AI to recognize your unique typing patterns</p>
+                    </div>
+                </div>
+
+                <!-- Training Configuration Card -->
+                <div class="card config-card">
+                    <div class="card-header">
+                        <i class="fas fa-sliders-h"></i>
+                        <h3>Training Configuration</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <label>Training Sessions</label>
+                            <div class="input-wrapper">
+                                <input type="range" id="sessions" min="3" max="15" value="7" class="slider">
+                                <span class="slider-value">7</span>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Duration per Session</label>
+                            <div class="input-wrapper">
+                                <input type="range" id="duration" min="30" max="120" value="45" class="slider">
+                                <span class="slider-value">45s</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text Display Card -->
+                <div class="card text-card">
+                    <div class="card-header">
+                        <i class="fas fa-file-text"></i>
+                        <h3>Text to Type</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-display" id="textDisplay">
+                            Click "Start Training" to begin your first session
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Typing Area Card -->
+                <div class="card typing-card">
+                    <div class="card-header">
+                        <i class="fas fa-keyboard"></i>
+                        <h3>Your Typing Area</h3>
+                    </div>
+                    <div class="card-body">
+                        <textarea id="typingArea" placeholder="Type the text above here..." disabled></textarea>
+                        <div class="typing-stats">
+                            <div class="stat">
+                                <span class="stat-label">WPM</span>
+                                <span class="stat-value" id="wpm">0</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">Accuracy</span>
+                                <span class="stat-value" id="accuracy">0%</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">Session</span>
+                                <span class="stat-value" id="sessionCount">0/7</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress Card -->
+                <div class="card progress-card">
+                    <div class="progress-info">
+                        <span id="progressText">Ready to start training</span>
+                        <span id="timeRemaining"></span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+
+                <!-- Control Buttons -->
+                <div class="controls">
+                    <button class="btn btn-primary" id="startBtn">
+                        <i class="fas fa-play"></i>
+                        <span>Start Training</span>
+                        <div class="btn-glow"></div>
+                    </button>
+                    <button class="btn btn-danger" id="stopBtn" disabled>
+                        <i class="fas fa-stop"></i>
+                        <span>Stop</span>
+                    </button>
+                    <button class="btn btn-secondary" id="testBtn">
+                        <i class="fas fa-flask"></i>
+                        <span>Test Model</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Security Tab -->
+            <div class="tab-panel" id="security">
+                <div class="panel-header">
+                    <div class="header-icon">
+                        <i class="fas fa-shield-virus"></i>
+                    </div>
+                    <div class="header-text">
+                        <h2>Security System</h2>
+                        <p>Monitor and protect your system from unauthorized access</p>
+                    </div>
+                </div>
+
+                <!-- System Status Card -->
+                <div class="card status-card">
+                    <div class="card-header">
+                        <i class="fas fa-heartbeat"></i>
+                        <h3>System Status</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="status-display">
+                            <div class="status-circle stopped" id="statusCircle"></div>
+                            <div class="status-text">
+                                <h4 id="statusTitle">System Stopped</h4>
+                                <p id="statusDesc">Security monitoring is inactive</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Authentication Test Card -->
+                <div class="card auth-card">
+                    <div class="card-header">
+                        <i class="fas fa-fingerprint"></i>
+                        <h3>Authentication Test</h3>
+                    </div>
+                    <div class="card-body">
+                        <!-- Text to Type Display -->
+                        <div class="auth-text-display" id="authTextDisplay">
+                            Click "Test Authentication" to get a sentence to type
+                        </div>
+                        
+                        <!-- Typing Area -->
+                        <textarea id="authArea" placeholder="Type the text shown above here..."></textarea>
+                        
+                        <!-- Test Button -->
+                        <button class="btn btn-warning" id="authBtn">
+                            <i class="fas fa-key"></i>
+                            <span>Test Authentication</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Security Controls -->
+                <div class="controls">
+                    <button class="btn btn-primary btn-large" id="securityToggle">
+                        <i class="fas fa-power-off"></i>
+                        <span>Start Security System</span>
+                        <div class="btn-glow"></div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div class="tab-panel" id="settings">
+                <div class="panel-header">
+                    <div class="header-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="header-text">
+                        <h2>System Settings</h2>
+                        <p>Configure security parameters and alert preferences</p>
+                    </div>
+                </div>
+
+                <!-- Model Settings Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-brain"></i>
+                        <h3>Model Settings</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <label>Security Sensitivity</label>
+                            <select class="select-input">
+                                <option value="low">Low - More tolerant</option>
+                                <option value="medium" selected>Medium - Balanced</option>
+                                <option value="high">High - Strict</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alert Settings Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-bell"></i>
+                        <h3>Alert Settings</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <label>Mobile Number</label>
+                            <input type="tel" value="+918015339335" class="text-input">
+                        </div>
+                        <div class="input-group">
+                            <label>Max Failed Attempts</label>
+                            <input type="number" value="3" min="2" max="10" class="text-input">
+                        </div>
+                        <div class="toggle-group">
+                            <label class="toggle-label">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                                Emergency Phone Calls
+                            </label>
+                        </div>
+                        <div class="toggle-group">
+                            <label class="toggle-label">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                                Camera Capture
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alert Testing Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-flask"></i>
+                        <h3>Test Alert System</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Test individual alert components to ensure they work properly:</p>
+                        <div class="alert-test-buttons">
+                            <button class="btn btn-secondary" onclick="app.testAlertSystem('alarm')">
+                                <i class="fas fa-volume-up"></i>
+                                <span>Test Alarm</span>
+                            </button>
+                            <button class="btn btn-secondary" onclick="app.testAlertSystem('sms')">
+                                <i class="fas fa-sms"></i>
+                                <span>Test SMS</span>
+                            </button>
+                            <button class="btn btn-secondary" onclick="app.testAlertSystem('email')">
+                                <i class="fas fa-envelope"></i>
+                                <span>Test Email</span>
+                            </button>
+                            <button class="btn btn-secondary" onclick="app.testAlertSystem('call')">
+                                <i class="fas fa-phone"></i>
+                                <span>Test Call</span>
+                            </button>
+                            <button class="btn btn-secondary" onclick="app.testAlertSystem('camera')">
+                                <i class="fas fa-camera"></i>
+                                <span>Test Camera</span>
+                            </button>
+                            <button class="btn btn-warning" onclick="app.testAlertSystem('all')">
+                                <i class="fas fa-rocket"></i>
+                                <span>Test All Systems</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emergency Test Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Emergency Breach Test</h3>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>⚠️ Warning:</strong> This will trigger a full security breach alert including phone calls, SMS, and alarms!</p>
+                        <button class="btn btn-danger" onclick="app.triggerSecurityBreach()">
+                            <i class="fas fa-fire"></i>
+                            <span>🚨 SIMULATE SECURITY BREACH</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Save Button -->
+                <div class="controls">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-save"></i>
+                        <span>Save Settings</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Notification System -->
+    <div class="notification" id="notification">
+        <div class="notification-content">
+            <i class="notification-icon"></i>
+            <span class="notification-text"></span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
