@@ -1,0 +1,23 @@
+[
+  {
+    "timestamp": "2025-09-19T13:52:36.686418",
+    "event_type": "training_completed",
+    "message": "Keystroke patterns trained for user: Kisore",
+    "severity": "info",
+    "failed_attempts": 0
+  },
+  {
+    "timestamp": "2025-09-19T13:53:10.059421",
+    "event_type": "alert_sent",
+    "message": "SECURITY_BREACH: SECURITY BREACH: 3 failed login attempts detected on your laptop at 2025-09-19 13:53:10",
+    "severity": "critical",
+    "failed_attempts": 3
+  },
+  {
+    "timestamp": "2025-09-19T13:53:10.074078",
+    "event_type": "security_breach",
+    "message": "3 failed authentication attempts",
+    "severity": "critical",
+    "failed_attempts": 3
+  }
+]

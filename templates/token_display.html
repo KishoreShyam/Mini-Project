@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎫 Authentication Token</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .token-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+        
+        .success-header {
+            color: #27ae60;
+            margin-bottom: 30px;
+        }
+        
+        .success-header h1 {
+            margin-bottom: 10px;
+        }
+        
+        .token-display {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 14px;
+            word-break: break-all;
+            margin: 20px 0;
+            border: 3px solid #27ae60;
+        }
+        
+        .token-info {
+            background: #e8f5e8;
+            border: 2px solid #27ae60;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .token-info h3 {
+            color: #27ae60;
+            margin-bottom: 15px;
+        }
+        
+        .usage-examples {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .usage-examples h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        
+        .btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+        }
+        
+        .btn-success {
+            background: linear-gradient(45deg, #27ae60, #229954);
+            color: white;
+        }
+        
+        .btn-danger {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            color: #856404;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .mobile-section {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .mobile-section h3 {
+            color: #1976d2;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="token-container">
+        <div class="success-header">
+            <h1>✅ Authentication Successful!</h1>
+            <p>Your secure token has been generated</p>
+        </div>
+        
+        <div class="token-info">
+            <h3>🎫 Your Authentication Token:</h3>
+            <div class="token-display">{{ token }}</div>
+            <p><strong>⏰ Expires:</strong> 30 minutes from now</p>
+            <p><strong>🔒 Permissions:</strong> shutdown, lock, status</p>
+        </div>
+        
+        <div class="warning">
+            <strong>⚠️ Security Notice:</strong> Keep this token secure! Anyone with this token can control your laptop remotely.
+        </div>
+        
+        <div class="usage-examples">
+            <h3>🔧 API Usage Examples:</h3>
+            
+            <h4>🔴 Emergency Shutdown:</h4>
+            <div class="code-block">GET http://localhost:5000/api/shutdown?token={{ token }}</div>
+            
+            <h4>🔒 Lock System:</h4>
+            <div class="code-block">GET http://localhost:5000/api/lock?token={{ token }}</div>
+            
+            <h4>📊 Get Status:</h4>
+            <div class="code-block">GET http://localhost:5000/api/status?token={{ token }}</div>
+        </div>
+        
+        <div class="mobile-section">
+            <h3>📱 Mobile App Integration:</h3>
+            <p>Use this token in your mobile app for emergency controls:</p>
+            <ol>
+                <li>Open Security Control mobile app</li>
+                <li>Go to Settings → API Token</li>
+                <li>Enter the token above</li>
+                <li>Save and test connection</li>
+            </ol>
+            <p><strong>📞 Emergency Phone:</strong> 8015339335</p>
+        </div>
+        
+        <div class="usage-examples">
+            <h3>🚨 Emergency Commands via Firebase:</h3>
+            <p>For cross-network emergency control (college demo):</p>
+            <div class="code-block">
+POST /api/emergency_command
+{
+  "command": "SHUTDOWN",
+  "phone": "8015339335",
+  "emergency_key": "your_emergency_key"
+}
+            </div>
+        </div>
+        
+        <div style="margin-top: 30px;">
+            <button class="btn btn-success" onclick="copyToken()">📋 COPY TOKEN</button>
+            <button class="btn btn-danger" onclick="testShutdown()">🔴 TEST SHUTDOWN</button>
+            <button class="btn btn-primary" onclick="testLock()">🔒 TEST LOCK</button>
+            <a href="/" class="btn btn-primary">🏠 BACK TO DASHBOARD</a>
+        </div>
+    </div>
+    
+    <script>
+        const token = "{{ token }}";
+        
+        function copyToken() {
+            navigator.clipboard.writeText(token).then(function() {
+                alert('✅ Token copied to clipboard!');
+            }, function(err) {
+                alert('❌ Failed to copy token: ' + err);
+            });
+        }
+        
+        async function testShutdown() {
+            if (!confirm('⚠️ Are you sure you want to test SHUTDOWN? This will actually shutdown your laptop!')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/shutdown?token=${token}`);
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    alert('✅ ' + result.message);
+                    document.body.innerHTML = '<div style="text-align:center;padding:50px;font-size:24px;color:#e74c3c;">🔴 LAPTOP SHUTTING DOWN...</div>';
+                } else {
+                    alert('❌ ' + result.message);
+                }
+            } catch (error) {
+                alert('❌ Error: ' + error.message);
+            }
+        }
+        
+        async function testLock() {
+            try {
+                const response = await fetch(`/api/lock?token=${token}`);
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    alert('✅ ' + result.message);
+                } else {
+                    alert('❌ ' + result.message);
+                }
+            } catch (error) {
+                alert('❌ Error: ' + error.message);
+            }
+        }
+        
+        // Auto-expire warning
+        setTimeout(() => {
+            alert('⚠️ Your token will expire in 5 minutes!');
+        }, 25 * 60 * 1000); // 25 minutes
+        
+        setTimeout(() => {
+            alert('❌ Your token has expired! Please login again.');
+            window.location.href = '/login';
+        }, 30 * 60 * 1000); // 30 minutes
+    </script>
+</body>
+</html>

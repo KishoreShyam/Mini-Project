@@ -1,0 +1,11 @@
+{
+  "Kisore": {
+    "phrase": "security system access",
+    "avg_total_time": 11.131930907567343,
+    "avg_chars_per_second": 2.183821518647131,
+    "avg_words_per_minute": 17.86763060711289,
+    "avg_rhythm": 0.5059968594348792,
+    "tolerance": 0.4,
+    "trained_at": "2025-09-19T13:52:36.651942"
+  }
+}

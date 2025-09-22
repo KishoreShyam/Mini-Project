@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔒 Security Control Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .status-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .status-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .status-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .status-online {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        .status-warning {
+            color: #f39c12;
+            font-weight: bold;
+        }
+        
+        .status-critical {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .control-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+        }
+        
+        .btn-warning {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            color: white;
+        }
+        
+        .btn-danger {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logs-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .log-entry {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            background: #f8f9fa;
+        }
+        
+        .log-warning {
+            border-left-color: #f39c12;
+            background: #fef9e7;
+        }
+        
+        .log-critical {
+            border-left-color: #e74c3c;
+            background: #fdedec;
+        }
+        
+        .timestamp {
+            font-size: 12px;
+            color: #7f8c8d;
+        }
+        
+        .emergency-section {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .token-display {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            word-break: break-all;
+            margin: 10px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .status-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .control-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔒 Security Control Dashboard</h1>
+            <p>Advanced Security System - Real-time Monitoring & Control</p>
+            <p><strong>📞 Emergency Contact:</strong> 8015339335</p>
+        </div>
+        
+        <div class="status-grid">
+            <div class="status-card">
+                <h3>🛡️ System Status</h3>
+                <div class="status-online">✅ ONLINE & MONITORING</div>
+                <p>Last Update: <span id="current-time"></span></p>
+                <p>Web App: Active</p>
+                <p>Firebase: Connected</p>
+            </div>
+            
+            <div class="status-card">
+                <h3>⚠️ Security Alerts</h3>
+                <div class="{% if failed_attempts >= 3 %}status-critical{% elif failed_attempts > 0 %}status-warning{% else %}status-online{% endif %}">
+                    Failed Attempts: {{ failed_attempts }}/3
+                </div>
+                <p>Status: {% if failed_attempts >= 3 %}🚨 BREACH DETECTED{% elif failed_attempts > 0 %}⚠️ MONITORING{% else %}✅ SECURE{% endif %}</p>
+            </div>
+            
+            <div class="status-card">
+                <h3>📊 Activity Log</h3>
+                <p>Recent Events: {{ logs|length }}</p>
+                <p>Last Activity: {% if logs %}{{ logs[-1].timestamp[:19] }}{% else %}No recent activity{% endif %}</p>
+            </div>
+        </div>
+        
+        <div class="emergency-section">
+            <h2>🚨 EMERGENCY CONTROLS</h2>
+            <p>Use these controls for immediate security actions</p>
+            <div class="control-buttons">
+                <button class="btn btn-danger" onclick="requestToken('shutdown')">🔴 EMERGENCY SHUTDOWN</button>
+                <button class="btn btn-warning" onclick="requestToken('lock')">🔒 LOCK SYSTEM</button>
+                <button class="btn btn-primary" onclick="getStatus()">📊 GET STATUS</button>
+            </div>
+        </div>
+        
+        <div class="status-card">
+            <h3>🔑 Authentication</h3>
+            <p>Generate secure tokens for remote control</p>
+            <div class="control-buttons">
+                <a href="/login" class="btn btn-primary">🔐 LOGIN & GET TOKEN</a>
+                <button class="btn btn-primary" onclick="generateToken()">🎫 GENERATE API TOKEN</button>
+            </div>
+            <div id="token-result"></div>
+        </div>
+        
+        <div class="logs-section">
+            <h3>📋 Security Logs</h3>
+            <div id="logs-container">
+                {% for log in logs %}
+                <div class="log-entry {% if log.severity == 'warning' %}log-warning{% elif log.severity == 'critical' %}log-critical{% endif %}">
+                    <div class="timestamp">{{ log.timestamp[:19] }}</div>
+                    <strong>{{ log.event_type }}</strong>: {{ log.message }}
+                    {% if log.ip_address %}<br><small>IP: {{ log.ip_address }}</small>{% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            <button class="btn btn-primary" onclick="refreshLogs()">🔄 REFRESH LOGS</button>
+        </div>
+    </div>
+    
+    <script>
+        // Update current time
+        function updateTime() {
+            document.getElementById('current-time').textContent = new Date().toLocaleString();
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+        
+        // Generate API token
+        async function generateToken() {
+            const username = prompt('Enter username:');
+            const password = prompt('Enter password:');
+            
+            if (!username || !password) return;
+            
+            try {
+                const response = await fetch('/api/generate_token', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    document.getElementById('token-result').innerHTML = `
+                        <h4>✅ Token Generated Successfully</h4>
+                        <div class="token-display">${result.token}</div>
+                        <p><strong>Expires:</strong> ${result.expires_in}</p>
+                        <p><strong>Usage:</strong> Add ?token=${result.token} to API calls</p>
+                    `;
+                } else {
+                    alert('❌ ' + result.message);
+                }
+            } catch (error) {
+                alert('❌ Error generating token: ' + error.message);
+            }
+        }
+        
+        // Request token for specific action
+        function requestToken(action) {
+            const token = prompt(`Enter your authentication token for ${action.toUpperCase()}:`);
+            if (!token) return;
+            
+            if (action === 'shutdown') {
+                if (confirm('⚠️ Are you sure you want to SHUTDOWN the laptop?')) {
+                    executeAction('shutdown', token);
+                }
+            } else if (action === 'lock') {
+                executeAction('lock', token);
+            }
+        }
+        
+        // Execute action with token
+        async function executeAction(action, token) {
+            try {
+                const response = await fetch(`/api/${action}?token=${token}`);
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    alert('✅ ' + result.message);
+                    if (action === 'shutdown') {
+                        document.body.innerHTML = '<div style="text-align:center;padding:50px;font-size:24px;">🔴 LAPTOP SHUTTING DOWN...</div>';
+                    }
+                } else {
+                    alert('❌ ' + result.message);
+                }
+            } catch (error) {
+                alert('❌ Error: ' + error.message);
+            }
+        }
+        
+        // Get system status
+        async function getStatus() {
+            const token = prompt('Enter your authentication token:');
+            if (!token) return;
+            
+            try {
+                const response = await fetch(`/api/status?token=${token}`);
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    const data = result.data;
+                    alert(`📊 SYSTEM STATUS\n\nStatus: ${data.status}\nTime: ${data.timestamp}\nFailed Attempts: ${data.failed_attempts}\nActive Tokens: ${data.active_tokens}\nUser: ${data.system_info.user}`);
+                } else {
+                    alert('❌ ' + result.message);
+                }
+            } catch (error) {
+                alert('❌ Error: ' + error.message);
+            }
+        }
+        
+        // Refresh logs
+        async function refreshLogs() {
+            const token = prompt('Enter your authentication token:');
+            if (!token) return;
+            
+            try {
+                const response = await fetch(`/api/logs?token=${token}`);
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    const logsContainer = document.getElementById('logs-container');
+                    logsContainer.innerHTML = '';
+                    
+                    result.logs.forEach(log => {
+                        const logClass = log.severity === 'warning' ? 'log-warning' : 
+                                       log.severity === 'critical' ? 'log-critical' : '';
+                        
+                        logsContainer.innerHTML += `
+                            <div class="log-entry ${logClass}">
+                                <div class="timestamp">${log.timestamp.substring(0, 19)}</div>
+                                <strong>${log.event_type}</strong>: ${log.message}
+                                ${log.ip_address ? `<br><small>IP: ${log.ip_address}</small>` : ''}
+                            </div>
+                        `;
+                    });
+                } else {
+                    alert('❌ ' + result.message);
+                }
+            } catch (error) {
+                alert('❌ Error: ' + error.message);
+            }
+        }
+        
+        // Auto-refresh logs every 30 seconds
+        setInterval(() => {
+            // Silent refresh without prompting for token
+            fetch('/api/logs?token=auto-refresh')
+                .then(response => response.json())
+                .then(result => {
+                    if (result.status === 'success') {
+                        // Update logs silently
+                    }
+                })
+                .catch(error => {
+                    console.log('Auto-refresh failed:', error);
+                });
+        }, 30000);
+    </script>
+</body>
+</html>

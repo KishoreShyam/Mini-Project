@@ -1,0 +1,6 @@
+2025-09-19T13:56:52.840507 | patterns_loaded | Loaded 1 user patterns
+2025-09-19T13:56:52.850381 | system_started | Security desktop application started
+2025-09-19T13:58:26.569387 | system_locked | System locked
+2025-09-19T13:59:04.640274 | test_alert | Test alert sent
+2025-09-19T13:59:42.757286 | test_alert | Test alert sent
+2025-09-19T14:00:07.621057 | system_locked | System locked
